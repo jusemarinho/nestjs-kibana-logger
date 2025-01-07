@@ -39,7 +39,7 @@ Once the installation process is complete, we can import the LogModule into the 
 ```ts
 
 import { Module } from '@nestjs/common';
-import { UnleashModule } from '@josemarinho/nestjs-kibana-logger';
+import { LogModule } from '@josemarinho/nestjs-kibana-logger';
 
 @Module({
   imports: [
