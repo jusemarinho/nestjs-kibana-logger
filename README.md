@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) Lib To Communicate With Unleash Feature Toggle.
+[Nest](https://github.com/nestjs/nest) A NestJS library for structured logging with Kibana integration using pino-elasticsearch.
 
 ## Installation
 
