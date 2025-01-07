@@ -1,6 +1,6 @@
 {
   "name": "@josemarinho/nestjs-kibana-logger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A NestJS library for structured logging with Kibana integration using pino-elasticsearch.",
   "author": "José Paulo Marinho <josepaulomarinho2@gmail.com>",
   "license": "MIT",
