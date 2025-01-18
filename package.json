@@ -34,9 +34,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jusemarinho/unleash"
+    "url": "https://github.com/jusemarinho/nestjs-kibana-logger"
   },
-  "bugs": "https://github.com/jusemarinho/unleash",
+  "bugs": "https://github.com/jusemarinho/nestjs-kibana-logger",
   "peerDependencies": {
     "@nestjs/common": "^8.0.0",
     "rxjs": "^7.x"
@@ -50,7 +50,6 @@
     "pino-elasticsearch": "^8.1.0",
     "pino-http": "^10.3.0",
     "rxjs": "^7.x",
-    "unleash-client": "^6.3.3",
     "uuid": "^11.0.4"
   },
   "devDependencies": {
