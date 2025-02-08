@@ -54,6 +54,34 @@ export class AppModule {}
 
 ```
 
+If you use Basic Authentication with `username` and `password` or with `ApiKey`, you can add it to the configuration.
+
+#### Only use one or the other authentication
+
+```ts
+
+import { Module } from '@nestjs/common';
+import { LogModule } from '@josemarinho/nestjs-kibana-logger';
+
+@Module({
+  imports: [
+    LogModule.forRoot({
+      kibanaHost: 'elasticsearch-host',
+      indexKibana: 'index-kibana'
+      auth: {
+        username: 'elasticsearch-user',
+        password: 'elasticsearch-password',
+        apiKey: 'api-key'
+      },
+    }),
+  ],
+  ...
+})
+export class AppModule {}
+
+```
+
+
 ### Integrating the Log Service in `main.ts`
 
 To utilize the custom logging functionality provided by your library, the Log service is set as the logger for the NestJS application. Here’s a breakdown:

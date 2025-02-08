@@ -18,6 +18,7 @@ export class LogModule {
       options: {
         node: configLog.kibanaHost,
         index: configLog.indexKibana,
+        auth: configLog.auth ? 'username' in configLog.auth ? { username: configLog.auth.username, password: configLog.auth.password } : { apiKey: configLog.auth.apiKey } : undefined
       },
     });
 
@@ -35,6 +36,7 @@ export class LogModule {
             transport: {
               targets: targetsPinoLogger,
             },
+            timestamp: configLog.timestamp,
           },
         }),
         ClsModule.forRoot({
