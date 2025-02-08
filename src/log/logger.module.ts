@@ -1,4 +1,4 @@
-import { DynamicModule } from '@nestjs/common';
+import { DynamicModule, Provider } from '@nestjs/common';
 
 import { TargetPinoConfiguration } from './interfaces/log-configuration.interface';
 
@@ -53,7 +53,7 @@ export class LogModule {
         }),
       ],
       providers: [LogService],
-      exports: [LogService, ClsService],
+      exports: [LogService],
     };
   }
 }

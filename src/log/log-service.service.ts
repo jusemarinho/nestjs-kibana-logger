@@ -6,7 +6,7 @@ import { Logger, Params, PARAMS_PROVIDER_TOKEN, PinoLogger } from 'nestjs-pino';
 export class LogService extends Logger {
   constructor(
     pinoLogger: PinoLogger,
-    @Inject(ClsService) private readonly cls: ClsService,
+    private readonly cls: ClsService,
     @Inject(PARAMS_PROVIDER_TOKEN) params: Params,
   ) {
     super(pinoLogger, params);
