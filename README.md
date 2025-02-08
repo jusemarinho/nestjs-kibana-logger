@@ -81,6 +81,17 @@ export class AppModule {}
 
 ```
 
+This solution uses ClsModule to generate a unique traceId for each request, ensuring consistent tracing throughout the application. The TraceIdMiddleware checks for the x-trace-id header or generates a new traceId and stores it in the context. The custom LogService retrieves this traceId from the context and includes it in all log messages for better traceability.
+
+```ts
+
+LogModule.forRoot({
+  // rest of configuration
+  traceIdHeaderName: 'header-name' // by default is 'x-trace-id'
+})
+
+```
+
 
 ### Integrating the Log Service in `main.ts`
 

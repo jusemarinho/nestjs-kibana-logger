@@ -7,6 +7,7 @@ import { ClsModule } from 'nestjs-cls';
 import { v4 as uuid } from 'uuid';
 import { LogService } from './log-service.service';
 import { ConfigLog } from './interfaces/config-log-module.interface';
+import { Request } from 'express';
 
 export class LogModule {
   static forRoot(configLog?: ConfigLog): DynamicModule {
@@ -44,7 +45,10 @@ export class LogModule {
           middleware: {
             mount: true,
             generateId: true,
-            idGenerator: () => uuid(),
+            idGenerator: (req: Request): string => {
+              const traceId = req.headers[configLog.traceIdHeaderName ?? 'x-trace-id'];
+              return Array.isArray(traceId) ? traceId[0] : traceId || uuid();
+            },
           },
         }),
       ],

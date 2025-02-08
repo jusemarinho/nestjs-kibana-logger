@@ -5,6 +5,7 @@ export interface ConfigLog {
     indexKibana: string;
     auth?: AuthBasic | AuthKey;
     timestamp?: TimeFn | boolean;
+    traceIdHeaderName?: string
 }
 
 export interface AuthBasic {
