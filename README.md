@@ -67,7 +67,7 @@ import { LogModule } from '@josemarinho/nestjs-kibana-logger';
   imports: [
     LogModule.forRoot({
       kibanaHost: 'elasticsearch-host',
-      indexKibana: 'index-kibana'
+      indexKibana: 'index-kibana',
       auth: {
         username: 'elasticsearch-user',
         password: 'elasticsearch-password',
