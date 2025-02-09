@@ -1,9 +1,9 @@
-import { DynamicModule, Provider } from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 
 import { TargetPinoConfiguration } from './interfaces/log-configuration.interface';
 
 import { LoggerModule } from 'nestjs-pino';
-import { ClsModule, ClsService } from 'nestjs-cls';
+import { ClsModule } from 'nestjs-cls';
 import { v4 as uuid } from 'uuid';
 import { LogService } from './log-service.service';
 import { ConfigLog } from './interfaces/config-log-module.interface';
@@ -38,6 +38,7 @@ export class LogModule {
               targets: targetsPinoLogger,
             },
             timestamp: configLog.timestamp,
+            autoLogging: configLog.autoLogging
           },
         }),
         ClsModule.forRoot({

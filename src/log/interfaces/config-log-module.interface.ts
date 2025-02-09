@@ -6,6 +6,7 @@ export interface ConfigLog {
     auth?: AuthBasic | AuthKey;
     timestamp?: TimeFn | boolean;
     traceIdHeaderName?: string
+    autoLogging?: boolean;
 }
 
 export interface AuthBasic {
