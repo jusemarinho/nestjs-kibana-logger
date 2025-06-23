@@ -9,6 +9,8 @@ import { LogService } from './log-service.service';
 import { ConfigLog } from './interfaces/config-log-module.interface';
 import { Request } from 'express';
 
+export const CONFIG_LOG = Symbol('CONFIG_LOG');
+
 export class LogModule {
   static forRoot(configLog?: ConfigLog): DynamicModule {
     const targetsPinoLogger: TargetPinoConfiguration[] = [];
@@ -53,7 +55,13 @@ export class LogModule {
           },
         }),
       ],
-      providers: [LogService],
+      providers: [
+        LogService,
+        {
+          provide: CONFIG_LOG,
+          useValue: configLog,
+        }
+      ],
       exports: [LogService],
     };
   }

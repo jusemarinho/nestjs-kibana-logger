@@ -1,6 +1,6 @@
 {
   "name": "@josemarinho/nestjs-kibana-logger",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "A NestJS library for structured logging with Kibana integration using pino-elasticsearch.",
   "author": "José Paulo Marinho <josepaulomarinho2@gmail.com>",
   "license": "MIT",
@@ -44,6 +44,7 @@
   "dependencies": {
     "@golevelup/nestjs-modules": "^0.4.3",
     "@nestjs/axios": "^3.0.2",
+    "@nestjs/terminus": "^11.0.0",
     "axios": "^1.6.8",
     "nestjs-cls": "^4.5.0",
     "nestjs-pino": "^4.2.0",

@@ -22,14 +22,27 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Overview
 
-[Nest](https://github.com/nestjs/nest) A NestJS library for structured logging with Kibana integration using pino-elasticsearch.
+`@josemarinho/nestjs-kibana-logger` is a flexible logging module for NestJS that leverages [Pino](https://github.com/pinojs/pino) and integrates with:
+
+- **Elasticsearch/Kibana** using `pino-elasticsearch`
+- **Local file logging**
+- **Request context tracing** via `nestjs-cls`
+- **Custom trace ID injection**
+- Full compatibility with the built-in NestJS `Logger`
+
+---
 
 ## Installation
 
 ```bash
+# with npm
 $ npm install @josemarinho/nestjs-kibana-logger
+# with yarn
+$ yarn @josemarinho/nestjs-kibana-logger
+# with pnpm
+$ pnpm add @josemarinho/nestjs-kibana-logger
 ```
 
 ## Running the app
@@ -81,6 +94,8 @@ export class AppModule {}
 
 ```
 
+## 🧵 Request Trace ID Propagation
+
 This solution uses ClsModule to generate a unique traceId for each request, ensuring consistent tracing throughout the application. The TraceIdMiddleware checks for the x-trace-id header or generates a new traceId and stores it in the context. The custom LogService retrieves this traceId from the context and includes it in all log messages for better traceability.
 
 ```ts
@@ -130,4 +145,64 @@ export class AppService {
 
 ```
 
+## 🔍 Elasticsearch Health Check (com Terminus)
+
+If you’re using @nestjs/terminus, you can integrate a health indicator for your Elasticsearch/Kibana service using the same configuration.
+
+Just import class `ElasticsearchHealthIndicator` inside your HealthCheckController. Like this:
+
+```ts
+import { Controller, Get } from '@nestjs/common';
+import {
+  HealthCheck,
+  HealthCheckService,
+} from '@nestjs/terminus';
+import { ElasticsearchHealthIndicator } from './elasticsearch.health';
+
+@Controller('health')
+export class HealthController {
+  constructor(
+    private readonly health: HealthCheckService,
+    private readonly elasticsearch: ElasticsearchHealthIndicator,
+  ) {}
+
+  @Get()
+  @HealthCheck()
+  check() {
+    return this.health.check([
+      () => this.elasticsearch.pingCheck('elasticsearch'),
+    ]);
+  }
+}
+```
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See LICENSE for more information.
+
 After your app it's ready to running.
+
+## 🙏 Acknowledgments
+
+This module was made possible thanks to the following open source projects and libraries:
+
+- [NestJS](https://github.com/nestjs/nest) — A progressive Node.js framework for building efficient, scalable server-side applications.
+- [Pino](https://github.com/pinojs/pino) — The fastest Node.js logger, and the foundation of structured logging in this module.
+- [pino-elasticsearch](https://github.com/pinojs/pino-elasticsearch) — A powerful transport for streaming logs directly to Elasticsearch.
+- [nestjs-cls](https://github.com/nestjs-cls/nestjs-cls) — Contextual request tracing for NestJS via AsyncLocalStorage.
+- [@nestjs/terminus](https://github.com/nestjs/terminus) — Health checks for microservices and backend systems.
+- The open source community — For continuous inspiration and contributions that make projects like this possible.
+
+Special thanks to the contributors of these projects.
