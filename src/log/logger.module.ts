@@ -1,7 +1,6 @@
+// logger.module.ts
 import { DynamicModule } from '@nestjs/common';
-
 import { TargetPinoConfiguration } from './interfaces/log-configuration.interface';
-
 import { LoggerModule } from 'nestjs-pino';
 import { ClsModule } from 'nestjs-cls';
 import { v4 as uuid } from 'uuid';
@@ -9,12 +8,12 @@ import { LogService } from './log-service.service';
 import { ConfigLog } from './interfaces/config-log-module.interface';
 import { Request } from 'express';
 import { ElasticsearchHealthIndicator } from './elasticsearch.health';
-import { TerminusModule } from '@nestjs/terminus';
+import { HealthIndicatorService, TerminusModule } from '@nestjs/terminus';
 
 export const CONFIG_LOG = Symbol('CONFIG_LOG');
 
 export class LogModule {
-  static forRoot(configLog?: ConfigLog): DynamicModule {
+  static forRoot(configLog: ConfigLog): DynamicModule {
     const targetsPinoLogger: TargetPinoConfiguration[] = [];
 
     targetsPinoLogger.push({
@@ -23,7 +22,15 @@ export class LogModule {
       options: {
         node: configLog.kibanaHost,
         index: configLog.indexKibana,
-        auth: configLog.auth ? 'username' in configLog.auth ? { username: configLog.auth.username, password: configLog.auth.password } : { apiKey: configLog.auth.apiKey } : undefined
+        auth:
+          configLog.auth
+            ? 'username' in configLog.auth
+              ? {
+                username: configLog.auth.username,
+                password: configLog.auth.password,
+              }
+              : { apiKey: configLog.auth.apiKey }
+            : undefined,
       },
     });
 
@@ -43,7 +50,7 @@ export class LogModule {
               targets: targetsPinoLogger,
             },
             timestamp: configLog.timestamp,
-            autoLogging: configLog.autoLogging
+            autoLogging: configLog.autoLogging,
           },
         }),
         ClsModule.forRoot({
@@ -64,7 +71,11 @@ export class LogModule {
           provide: CONFIG_LOG,
           useValue: configLog,
         },
-        ElasticsearchHealthIndicator
+        {
+          provide: ElasticsearchHealthIndicator,
+          useFactory: (healthIndicatorService, configLogInjected: ConfigLog) => new ElasticsearchHealthIndicator(healthIndicatorService, configLogInjected),
+          inject: [HealthIndicatorService, CONFIG_LOG],
+        },
       ],
       exports: [LogService, ElasticsearchHealthIndicator],
     };
