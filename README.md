@@ -157,7 +157,7 @@ import {
   HealthCheck,
   HealthCheckService,
 } from '@nestjs/terminus';
-import { ElasticsearchHealthIndicator } from './elasticsearch.health';
+import { ElasticsearchHealthIndicator } from "@josemarinho/nestjs-kibana-logger";
 
 @Controller('health')
 export class HealthController {
