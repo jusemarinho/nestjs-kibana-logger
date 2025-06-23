@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 import { LogService } from './log-service.service';
 import { ConfigLog } from './interfaces/config-log-module.interface';
 import { Request } from 'express';
+import { ElasticsearchHealthIndicator } from './elasticsearch.health';
 
 export const CONFIG_LOG = Symbol('CONFIG_LOG');
 
@@ -60,9 +61,10 @@ export class LogModule {
         {
           provide: CONFIG_LOG,
           useValue: configLog,
-        }
+        },
+        ElasticsearchHealthIndicator
       ],
-      exports: [LogService],
+      exports: [LogService, ElasticsearchHealthIndicator],
     };
   }
 }
