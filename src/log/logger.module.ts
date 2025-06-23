@@ -9,6 +9,7 @@ import { LogService } from './log-service.service';
 import { ConfigLog } from './interfaces/config-log-module.interface';
 import { Request } from 'express';
 import { ElasticsearchHealthIndicator } from './elasticsearch.health';
+import { TerminusModule } from '@nestjs/terminus';
 
 export const CONFIG_LOG = Symbol('CONFIG_LOG');
 
@@ -35,6 +36,7 @@ export class LogModule {
       module: LogModule,
       global: true,
       imports: [
+        TerminusModule,
         LoggerModule.forRoot({
           pinoHttp: {
             transport: {
