@@ -7,6 +7,7 @@ export interface ConfigLog {
     timestamp?: TimeFn | boolean;
     traceIdHeaderName?: string
     autoLogging?: boolean;
+    base?: Record<string, any>;
 }
 
 export interface AuthBasic {

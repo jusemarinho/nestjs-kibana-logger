@@ -49,6 +49,7 @@ export class LogModule {
             transport: {
               targets: targetsPinoLogger,
             },
+            base: configLog.base,
             timestamp: configLog.timestamp,
             autoLogging: configLog.autoLogging,
           },
