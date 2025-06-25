@@ -40,12 +40,13 @@
 # with npm
 $ npm install @josemarinho/nestjs-kibana-logger
 # with yarn
-$ yarn @josemarinho/nestjs-kibana-logger
+$ yarn add @josemarinho/nestjs-kibana-logger
 # with pnpm
 $ pnpm add @josemarinho/nestjs-kibana-logger
 ```
 
 ## Running the app
+
 
 Once the installation process is complete, we can import the LogModule into the root AppModule.
 
@@ -57,7 +58,7 @@ import { LogModule } from '@josemarinho/nestjs-kibana-logger';
 @Module({
   imports: [
     LogModule.forRoot({
-      kibanaHost: 'kibana-host',
+      kibanaHost: 'elasticsearch-host',
       indexKibana: 'index-kibana'
     }),
   ],
@@ -66,6 +67,40 @@ import { LogModule } from '@josemarinho/nestjs-kibana-logger';
 export class AppModule {}
 
 ```
+
+### Adding Custom Log Metadata (`base`)
+
+You can optionally pass a `base` object inside your `LogModule.forRoot` configuration. The `base` properties will be automatically added to all log entries.
+
+This is useful for adding fixed metadata such as environment, application name, team name, etc.
+
+```ts
+LogModule.forRoot({
+  kibanaHost: 'elasticsearch-host',
+  indexKibana: 'index-kibana',
+  base: {
+    app: 'my-app',
+    env: 'production',
+    team: 'squad-alpha',
+  },
+});
+```
+
+Each log will now include this metadata automatically:
+
+```json
+{
+  "level": 30,
+  "time": "...",
+  "msg": "your log message",
+  "app": "locket-letter-api",
+  "env": "production",
+  "team": "squad-alpha"
+}
+```
+
+> Note: You are free to customize the fields included in the `base` object according to your needs. These values are static and applied to all logs globally.
+
 
 If you use Basic Authentication with `username` and `password` or with `ApiKey`, you can add it to the configuration.
 
@@ -137,7 +172,7 @@ export class AppService {
   private readonly logger = new Logger(AppService.name);
 
   doSomething(): void {  
-    this.logger.log('This is a log message');       // Standard log message  
+    this.logger.log('This is a log message');      // Standard log message  
     this.logger.warn('This is a warning message'); // Warning message  
     this.logger.error('This is an error message'); // Error message  
   }  
